@@ -28,8 +28,8 @@ public class Updater extends MineChat
 
 	public boolean update(String new_version_adress, String new_plugin_adress)
 	{
-		//PluginDescriptionFile pdFile = getDescription();
-		//plugin_name = pdFile.getName();
+		PluginDescriptionFile pdFile = getDescription();
+		plugin_name = pdFile.getName();
 		plugin_name = "MineChat";
 		System.out.println("["+ plugin_name +"] Searching for update...");
 
@@ -73,17 +73,17 @@ public class Updater extends MineChat
 		}
 		catch (MalformedURLException e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		catch (FileNotFoundException e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
 			System.out.println("["+ plugin_name +"] Unable to find Version-File!");
 			System.out.println("["+ plugin_name +"] Unable to load update!");
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return true;
 	}
