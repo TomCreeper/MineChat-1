@@ -28,7 +28,7 @@ class StoredData(db.Model):
   ## characters.   To remove this limit, define value to be a text
   ## property instead, by commnenting out the previous line
   ## and replacing it by this one:
-  ## value db.TextProperty()
+   value db.TextProperty()
   date = db.DateTimeProperty(required=True, auto_now=True)
 class StoredMessages(db.Model):
   author = db.StringProperty()
@@ -38,7 +38,7 @@ class StoredMessages(db.Model):
   ## characters.   To remove this limit, define value to be a text
   ## property instead, by commnenting out the previous line
   ## and replacing it by this one:
-  ## value db.TextProperty()
+   value db.TextProperty()
   date = db.DateTimeProperty(required=True, auto_now=True)
 class StoredUsers(db.Model):
   name = db.StringProperty()
@@ -51,7 +51,7 @@ class StoredUsers(db.Model):
   ## characters.   To remove this limit, define value to be a text
   ## property instead, by commnenting out the previous line
   ## and replacing it by this one:
-  ## value db.TextProperty()
+   value db.TextProperty()
   date = db.DateTimeProperty(required=True, auto_now=True)
 class OnlineUsers(db.Model):
   name = db.StringProperty()
@@ -60,7 +60,7 @@ class OnlineUsers(db.Model):
   ## characters.   To remove this limit, define value to be a text
   ## property instead, by commnenting out the previous line
   ## and replacing it by this one:
-  ## value db.TextProperty()
+   value db.TextProperty()
   date = db.DateTimeProperty(required=True, auto_now=True)
 IntroMessage = '''
 <table border=0>
@@ -109,11 +109,11 @@ class StoreAValue(webapp.RequestHandler):
 			entry4 = db.GqlQuery("SELECT * FROM StoredData where tag = :1", "3").get()
 			entry5 = db.GqlQuery("SELECT * FROM StoredData where tag = :1", "4").get()
 			entry6 = db.GqlQuery("SELECT * FROM StoredData where tag = :1", "5").get()
-			'''db.run_in_transaction(dbSafeDelete,"1")
+			db.run_in_transaction(dbSafeDelete,"1")
 			db.run_in_transaction(dbSafeDelete,"2")
 			db.run_in_transaction(dbSafeDelete,"3")
 			db.run_in_transaction(dbSafeDelete,"4")
-			db.run_in_transaction(dbSafeDelete,"5")'''
+			db.run_in_transaction(dbSafeDelete,"5")
 			entry2.tag="2"
 			entry3.tag="3"
 			entry4.tag="4"
@@ -294,7 +294,7 @@ class webchat(webapp.RequestHandler):
 
 			else:
 				self.response.out.write("You can post messages.")
-				###self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
+				self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
 				show_stored_messages(self)
 				entry1 = db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get()
 				entry1.verified = "true"
@@ -350,7 +350,7 @@ class mobile(webapp.RequestHandler):
 				show_stored_messages(self)
 			else:
 				self.response.out.write("You can post messages.")
-				###self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
+				self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
 				show_stored_messages(self)
 				entry1 = db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get()
 				entry1.verified = "true"
@@ -376,7 +376,7 @@ class mobilepost(webapp.RequestHandler):
 		
 		
 		if users.get_current_user():
-			###self.response.out.write("<a href="+users.create_logout_url(self.request.uri)+">Logout</a>")
+			self.response.out.write("<a href="+users.create_logout_url(self.request.uri)+">Logout</a>")
 			if db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get():
 				login = "true"
 			else:
@@ -386,9 +386,9 @@ class mobilepost(webapp.RequestHandler):
 				self.response.out.write("Type /getverifcode <google email> into minecraft to get verified")
 				
 			else:
-				###self.response.out.write("You can post messages.")
-				###self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
-				###show_stored_messages(self)
+				self.response.out.write("You can post messages.")
+				self.response.out.write("Your code for the app is: "+ db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get().code)
+				show_stored_messages(self)
 				entry1 = db.GqlQuery("SELECT * FROM StoredUsers where email = :1", users.get_current_user().email()).get()
 				entry1.verified = "true"
 				self.response.out.write('''
@@ -496,7 +496,7 @@ def show_stored_data(self):
       </tr>''')
   # This next line is replaced by the one under it, in order to help
   # protect against SQL injection attacks.  Does it help enough?
-  #entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
+  entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
   entries = StoredData.all().order("-tag")
   for e in entries:
     entry_key_string = str(e.key())
@@ -520,18 +520,18 @@ def show_stored_messages(self):
     <p><table border=0>''')
   # This next line is replaced by the one under it, in order to help
   # protect against SQL injection attacks.  Does it help enough?
-  #entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
+  entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
   entries = db.GqlQuery("SELECT * "
 								"FROM StoredMessages "
                                 "ORDER BY date DESC LIMIT 10")
                                 
   for e in entries:
-		special1 = u"ง"+"f"
-		special2 = u"ง"+"l"
-		special3 = u"ง"+"e"
-		special4 = u"ง"+"c"
-		special5 = u"ง"+"6"
-		special6 = u"ง"+"n"
+		special1 = u"ยง"+"f"
+		special2 = u"ยง"+"l"
+		special3 = u"ยง"+"e"
+		special4 = u"ยง"+"c"
+		special5 = u"ยง"+"6"
+		special6 = u"ยง"+"n"
 		e.author = e.author.replace(special1, "");
 		e.author = e.author.replace(special2, "");
 		e.author = e.author.replace(special3, "");
@@ -549,19 +549,19 @@ def show_online_users(self):
     <p><table border=0>''')
   # This next line is replaced by the one under it, in order to help
   # protect against SQL injection attacks.  Does it help enough?
-  #entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
+  entries = db.GqlQuery("SELECT * FROM StoredData ORDER BY tag")
   entries = db.GqlQuery("SELECT * "
 								"FROM OnlineUsers "
                                 "ORDER BY date DESC LIMIT 50")
                                 
   for e in entries:
 	if e.online == "true":
-		special1 = u"ง"+"f"
-		special2 = u"ง"+"l"
-		special3 = u"ง"+"e"
-		special4 = u"ง"+"c"
-		special5 = u"ง"+"6"
-		special6 = u"ง"+"n"
+		special1 = u"ยง"+"f"
+		special2 = u"ยง"+"l"
+		special3 = u"ยง"+"e"
+		special4 = u"ยง"+"c"
+		special5 = u"ยง"+"6"
+		special6 = u"ยง"+"n"
 		e.name = e.name.replace(special1, "");
 		e.name = e.name.replace(special2, "");
 		e.name = e.name.replace(special3, "");
